@@ -1,0 +1,269 @@
+// Projeto 1 – Automação Residencial
+
+#include <SPI.h>
+#include <Ethernet.h>  // Biblioteca utilizada para comunicação com o Arduino
+ 
+// A linha abaixo permite definir o endereço físico (MAC ADDRESS) da placa de rede. 
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+
+byte ip[] = { 192, 168, 55, 104 };  //Define o endereço IP.
+    
+EthernetServer server(80);  // Porta onde estará aberta para comunicação Internet e Arduino.
+ 
+String readString;
+int L1 = 6;  //  Pino digital onde será ligado e desligado o LED.
+int L2 = 9;
+int L3 = 8;
+int L4 = 7;
+int L5 = 5;
+int L6 = 4;
+int L7 = 3;
+int L8 = 2;
+ 
+void setup(){
+ 
+  pinMode(L1, OUTPUT);  // Define o Pino 9 como saída.
+  pinMode(L2, OUTPUT);
+  pinMode(L3, OUTPUT);
+  pinMode(L4, OUTPUT);
+  pinMode(L5, OUTPUT);
+  pinMode(L6, OUTPUT);
+  pinMode(L7, OUTPUT);
+  pinMode(L8, OUTPUT);
+  Ethernet.begin(mac, ip);  // Chama o MAC e o endereço IP da placa Ethernet.
+  server.begin();  //  Inicia o servidor que esta inserido junto a placa Ethernet.
+}
+ 
+void loop(){
+  EthernetClient client = server.available();
+  if (client) {
+    while (client.connected()) {
+      if (client.available()) {
+        char c = client.read();
+ 
+        if (readString.length() < 100) {
+          readString += c;             
+        }
+
+        if (c == '\n') {
+          client.println("HTTP/1.1 200 OK");
+          client.println("Content-Type: text/html");
+          client.println();
+    
+           // A partir daqui começa os códigos html.
+    
+          client.println("<HTML>");
+          client.println("<BODY bgcolor=#808080>");
+          client.println("<H1>SmartHome CO</H1>");
+          client.println("<hr />");
+          client.println("<br />");
+          
+          //===================================================================================
+          
+          client.println("<br />"); 
+          client.println("<table border=1>");
+          client.println("<caption>Quarto:</caption>");
+          client.println("<tr>");
+          client.println("<td bhcolor=white>");
+          client.println("<a href=\"/AutoHome1/LampadaOn1\"\"><font size=5>Luz on</font></a>");
+          client.println("</td>");
+          client.println("<td>");
+          client.println("<a href=\"/AutoHome1/LampadaOff1\"\"><font size=5>Luz off</font></a><br />");
+          client.println("</td>");
+          client.println("<td>");
+          client.println("<a href=\"/AutoHome/LampadaOn2\"\"><font size=5>Luz on 2</font></a>");
+          client.println("<td>");
+          client.println("<a href=\"/AutoHome/LampadaOff2\"\"><font size=5>Luz Off 2</font></a><br />");
+          client.println("</td>");
+          client.println("</tr>");
+          client.println("/table>");
+          client.println("<br />"); 
+         
+         //==================================================================================== 
+          
+          client.println("<table border=1>");
+          client.println("<caption>Sala:</caption>");
+          client.println("<tr>");
+          client.println("<td bhcolor=white>");
+          client.println("<a href=\"/AutoHome/LampadaOn3\"\"><font size=5>Luz on</font></a>");
+          client.println("</td>");
+          client.println("<td>");
+          client.println("<a href=\"/AutoHome/LampadaOff3\"\"><font size=5>Luz off</font></a><br />");
+          client.println("</td>");
+          client.println("<td>");
+          client.println("<a href=\"/AutoHome/LampadaOn4\"\"><font size=5>Luz on 2</font></a>");
+          client.println("</td>");
+          client.println("<td>");
+          client.println("<a href=\"/AutoHome/LampadaOff4\"\"><font size=5>Luz off 2</font></a><br />");
+          client.println("</td>");
+          client.println("</tr>");
+          client.println("/table>");
+          client.println("<br />"); 
+          
+          //==================================================================================
+          
+          client.println("<table border=1>");
+          client.println("<caption>Cozinha:</caption>");
+          client.println("<tr>");
+          client.println("<td bhcolor=white>");
+          client.println("<a href=\"/AutoHome/LampadaOn5\"\"><font size=5>Luz on</font></a>");
+          client.println("</td>");
+          client.println("<td>");
+          client.println("<a href=\"/AutoHome/LampadaOff5\"\"><font size=5>Luz off</font></a><br />");
+          client.println("</td>");
+          client.println("</tr>");
+          client.println("/table>");
+          client.println("<br />"); 
+          
+          //==================================================================================
+          
+          client.println("<table border=1>");
+          client.println("<caption>Banheiro:</caption>");
+          client.println("<tr>");
+          client.println("<td bhcolor=white>");
+          client.println("<a href=\"/AutoHome/LampadaOn6\"\"><font size=5>Luz on</font></a>");
+          client.println("</td>");
+          client.println("<td>");
+          client.println("<a href=\"/AutoHome/LampadaOff6\"\"><font size=5>Luz off</font></a><br />");
+          client.println("</td>");
+          client.println("</tr>");
+          client.println("/table>");
+          client.println("<br />");
+          
+          //==================================================================================
+
+          client.println("<table border=1>");
+          client.println("<caption>Varanda:</caption>");
+          client.println("<tr>");
+          client.println("<td bhcolor=white>");
+          client.println("<a href=\"/AutoHome/LampadaOn7\"\"><font size=5>Luz on</font></a>");
+          client.println("</td>");
+          client.println("<td>");
+          client.println("<a href=\"/AutoHome/LampadaOff7\"\"><font size=5>Luz off</font></a><br />");
+          client.println("</td>");
+          client.println("</tr>");
+          client.println("/table>");
+          client.println("<br />");
+ 
+          //===================================================================================
+          
+          client.println("<table border=1>");
+          client.println("<caption>Externo:</caption>");
+          client.println("<tr>");
+          client.println("<td bhcolor=white>");
+          client.println("<a href=\"/AutoHome/LampadaOn8\"\"><font size=5>Luz on</font></a>");
+          client.println("</td>");
+          client.println("<td>");
+          client.println("<a href=\"/AutoHome/LampadaOff8\"\"><font size=5>Luz off</font></a><br />");
+          client.println("</td>");
+          client.println("</tr>");
+          client.println("/table>");
+          client.println("<br />");
+          client.println("<hr />");
+          
+          client.println("</BODY>");
+          client.println("</HTML>");
+          
+          //======================================================================================
+          
+          delay(1);
+          client.stop();
+          
+          //======================================================================================
+          
+        if(readString.indexOf("AutoHome1/LampadaOn1") > 0)
+          {
+            digitalWrite(L1, HIGH);  // Liga Lampada.
+          }
+          else {
+            if(readString.indexOf("AutoHome1/LampadaOff1") > 0)
+            {
+              digitalWrite(L1, LOW);  // Desliga Lampada.
+            }
+          }
+          
+          
+          if(readString.indexOf("AutoHome/LampadaOn2") > 0)
+          {
+            digitalWrite(L2, HIGH);  // Liga Lampada.
+          }
+          else {
+            if(readString.indexOf("AutoHome/LampadaOff2") > 0)
+            {
+              digitalWrite(L2, LOW);  // Desliga Lampada.
+            }
+          }
+          
+          if(readString.indexOf("AutoHome/LampadaOn3") > 0)
+          {
+            digitalWrite(L3, HIGH);  // Liga Lampada.
+          }
+          else {
+            if(readString.indexOf("AutoHome/LampadaOff3") > 0)
+            {
+              digitalWrite(L3, LOW);  // Desliga Lampada.
+            }
+          }
+          
+          if(readString.indexOf("AutoHome/LampadaOn4") > 0)
+          {
+            digitalWrite(L4, HIGH);  // Liga Lampada.
+          }
+          else {
+            if(readString.indexOf("AutoHome/LampadaOff4") > 0)
+            {
+              digitalWrite(L4, LOW);  // Desliga Lampada.
+            }
+          }
+          
+          if(readString.indexOf("AutoHome/LampadaOn5") > 0)
+          {
+            digitalWrite(L5, HIGH);  // Liga Lampada.
+          }
+          else {
+            if(readString.indexOf("AutoHome/LampadaOff5") > 0)
+            {
+              digitalWrite(L5, LOW);  // Desliga Lampada.
+            }
+          }
+          
+          if(readString.indexOf("AutoHome/LampadaOn6") > 0)
+          {
+            digitalWrite(L6, HIGH);  // Liga Lampada.
+          }
+          else {
+            if(readString.indexOf("AutoHome/LampadaOff6") > 0)
+            {
+              digitalWrite(L6, LOW);  // Desliga Lampada.
+            }
+          }
+          
+          if(readString.indexOf("AutoHome/LampadaOn7") > 0)
+          {
+            digitalWrite(L7, HIGH);  // Liga Lampada.
+          }
+          else {
+            if(readString.indexOf("AutoHome/LampadaOff7") > 0)
+            {
+              digitalWrite(L7, LOW);  // Desliga Lampada.
+            }
+          }
+          
+          if(readString.indexOf("AutoHome/LampadaOn8") > 0)
+          {
+            digitalWrite(L8, HIGH);  // Liga Lampada.
+          }
+          else {
+            if(readString.indexOf("AutoHome/LampadaOff8") > 0)
+            {
+              digitalWrite(L8, LOW);  // Desliga Lampada.
+            }
+          }
+          //======================================================================================
+          
+          readString="";    
+        }
+      }
+    }
+  }
+}
